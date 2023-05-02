@@ -1,9 +1,10 @@
 <template>
-    <v-app class="tw-mt-[60px] tw-mx-5">
+    <v-app class="tw-mt-[60px] tw-mx-5"
+    >
       <v-app-bar>
         <div class=" tw-flex tw-items-center tw-gap-4 tw-mx-5">
           <NuxtLink to="/" @click="form='table'">Home</NuxtLink>
-          <!-- <NuxtLink to="/employees" @click="form='table'">Table</NuxtLink> -->
+          <span @click="page='table'">Table</span>
         </div>
       </v-app-bar>
       <!-- <span @click="increment()">Test</span> -->
@@ -43,11 +44,20 @@
         </v-container>
       </v-main>
       <v-main v-if="page==='form'">
-          <h1 class=" tw-text-2xl tw-text-green-500 tw-font-bold">Employee Form</h1>
-          <h1 class=" tw-text-lg tw-text-green-500 tw-font-bold">About Employee: {{ form.id_number }}</h1>
-        <v-container>
+        <div class="tw-flex tw-fex-row tw-w-full tw-px-[38px]">
+          <div class="tw-flex tw-fex-col tw-w-full">
+            <div class="tw-flex tw-flex-col">
+              <h1 class=" tw-text-2xl tw-text-green-500 tw-font-bold">Employee Form</h1>
+              <h1 class=" tw-text-lg tw-text-green-500 tw-font-bold">About Employee: {{ form.id_number }}</h1>
+            </div>
+          </div>
+          <div @click="editForm(index)" class="tw-text-center tw-p-1 tw-flex tw-w-3/5 tw-justify-end">
+            <div class=" tw-bg-blue-400 tw-rounded-md tw-w-1/5 tw-h-[35px] tw-p-1 tw-flex tw-align-center tw-justify-center"><h5>Edit</h5></div>
+          </div>
+        </div>          
+        <v-container class="tw-border tw-rounded-xl tw-bg-green-100">
           <v-form v-model="valid">
-            <v-container class="tw-bg-green-200 tw-w-full">
+            <v-container class="tw-w-full">
               <div class="tw-flex tw-w-full">
                 <v-text-field
                   v-model="form.first_name"
@@ -274,6 +284,9 @@
       increment() {
         this.$store.commit('increment')
         console.log(this.$store.state.count)
+      },
+      editForm(index) {
+        this.isReadOnly = false
       }
     },
     computed: {

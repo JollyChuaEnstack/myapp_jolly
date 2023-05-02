@@ -24,11 +24,11 @@ export default defineNuxtConfig({
             ))
         }
     ],
+    buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuex'],
     postcss: {
         plugins: {
             tailwindcss: {},
             autoprefixer: {},
         },
     },
-      plugins: ['~/plugins/vuex.ts'],
 })
