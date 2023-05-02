@@ -30,4 +30,5 @@ export default defineNuxtConfig({
             autoprefixer: {},
         },
     },
+      plugins: ['~/plugins/vuex.ts'],
 })
