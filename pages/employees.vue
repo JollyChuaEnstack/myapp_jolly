@@ -7,7 +7,6 @@
           <span @click="page='table'">Table</span>
         </div>
       </v-app-bar>
-      <!-- <span @click="increment()">Test</span> -->
       <v-main v-if="page==='table'">
         <v-container >
           <h1 class=" tw-text-2xl tw-text-green-500 tw-font-bold">Employees' Page</h1>
@@ -67,6 +66,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
                 <v-text-field
                   v-model="form.last_name"
                   :rules="nameRules"
@@ -75,6 +75,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
               </div>
               
               <div class="tw-flex tw-w-full">
@@ -85,6 +86,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
                 <v-text-field
                   v-model="form.age"
                   :rules="emailRules"
@@ -92,6 +94,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
               </div>
 
               <div class="tw-flex tw-w-full">
@@ -102,6 +105,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
                 <v-text-field
                   v-model="form.language"
                   :rules="emailRules"
@@ -109,6 +113,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
               </div>
 
               <div class="tw-flex tw-w-full">
@@ -119,6 +124,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
               </div>
               <div class="tw-flex tw-w-full">
                 <v-text-field
@@ -128,6 +134,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
               </div>
               <div class="tw-flex tw-w-full">
                 <v-text-field
@@ -137,6 +144,7 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
               </div>
               <div class="tw-flex tw-w-full">
                 <v-text-field
@@ -146,10 +154,14 @@
                   :readonly="isReadOnly"
                   required
                 ></v-text-field>
+                <span v-if="isReadOnly">🔒</span>
               </div>
             
             </v-container>
           </v-form>
+          <div @click="save()" class="tw-text-center tw-py-2 tw-px-1 tw-bg-blue-400 tw-rounded-md">
+            Save
+          </div>
         </v-container>
          
       </v-main>
@@ -254,7 +266,7 @@
           first_name: "",
           last_name: "",
           motto: "",
-          age: null,
+          age: 0,
           job: "",
           language: "",
           job_description: "",
@@ -262,7 +274,8 @@
           university: "",
           course_taken: "",
           dream_career: ""
-        }
+        },
+        editedIndex: 0
       }
     },
     components: {
@@ -281,12 +294,26 @@
         this.people.splice(this.people.findIndex(indexReal), 1)
         this.$forceUpdate();
       },
-      increment() {
-        this.$store.commit('increment')
-        console.log(this.$store.state.count)
-      },
-      editForm(index) {
+      editForm() {
+        const number = this.people.findIndex(obj => obj.id_number === this.form.id_number);
+        console.log(number)
+        this.editedIndex = number
         this.isReadOnly = false
+      },
+      save() {
+        this.people[this.editedIndex].first_name = this.form.first_name
+        this.people[this.editedIndex].last_name = this.form.last_name
+        this.people[this.editedIndex].motto = this.form.motto
+        this.people[this.editedIndex].age = this.form.age
+        this.people[this.editedIndex].job = this.form.job
+        this.people[this.editedIndex].language = this.form.language
+        this.people[this.editedIndex].job_description = this.form.job_description
+        this.people[this.editedIndex].gender = this.form.gender
+        this.people[this.editedIndex].university = this.form.university
+        this.people[this.editedIndex].course_taken = this.form.course_taken
+        this.people[this.editedIndex].dream_career = this.form.dream_career
+        this.isReadOnly = true
+        this.page = 'table'
       }
     },
     computed: {
