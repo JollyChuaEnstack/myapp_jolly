@@ -28,7 +28,7 @@
                   </div>
                 </td>
                 <td class="list-group-item">
-                  <div @click="deleteClass(index.id_number)" class="tw-text-center tw-p-1 tw-bg-red-400 tw-rounded-md">
+                  <div @click="deleteEmployee(index)" class="tw-text-center tw-p-1 tw-bg-red-400 tw-rounded-md">
                     <h5>Delete</h5>
                   </div>
                 </td>
@@ -39,8 +39,6 @@
       </v-main>
     </v-app>
   </template>
-
-<!-- <button @click="$router.push(`/product/${index.id_number}`)" class=" tw-p-1 tw-bg-blue-400">View</button> -->
 
 <script lang="ts">
 import people from '~/consts/people.json'
@@ -133,7 +131,7 @@ import people from '~/consts/people.json'
                   course_taken: "Computer Science",
                   dream_career: "To become an iOS development team lead in a multinational company"
               }
-        ]  
+        ],
       }
     },
     components: {
@@ -142,8 +140,12 @@ import people from '~/consts/people.json'
     },
     mounted() {
     },
-    computed() {
-       //this.people = require('~/consts/ph-dropdown.json')
+    methods: {
+      deleteEmployee(index) {
+        const indexReal = (data) => data.id_number === index.id_number
+        this.people.splice(this.people.findIndex(indexReal), 1)
+        this.$forceUpdate();
+      }
     }
   }
 </script>
